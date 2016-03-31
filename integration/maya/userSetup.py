@@ -27,9 +27,9 @@ def register_runtime_command(opt):
             {cmd_name}NameCommand;
     ''')
 
-    exits = mel.eval('''exists "{}";'''.format(opt['cmd_name']))
+    exits = mel.eval('''exists "{0}";'''.format(opt['cmd_name']))
     if exits:
-        mel.eval('''runTimeCommand -e -delete "{}";'''.format(opt['cmd_name']))
+        mel.eval('''runTimeCommand -e -delete "{0}";'''.format(opt['cmd_name']))
 
     try:
         mel.eval(runtime_cmd.format(**opt))
@@ -133,7 +133,7 @@ def register_runtime_commands():
 if __name__ == '__main__':
     try:
         import stickysupratool
-        print("load stickysupratool: version ".format(stickysupratool.VERSION))
+        print("load stickysupratool: version {0}".format(stickysupratool.VERSION))
         register_runtime_commands()
 
     except Exception as e:
