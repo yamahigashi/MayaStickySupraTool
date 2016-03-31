@@ -12,6 +12,9 @@ section.
 ### Limitation
 supports Windows only
 
+### Notice
+This may cause maya into very unstable, thus using this with tough heart that isn't broken when maya crash is highly recommended.
+
 ## Install
 
 ### before maya launch
