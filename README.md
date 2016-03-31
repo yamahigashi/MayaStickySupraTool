@@ -50,3 +50,9 @@ MAYA_MODULE_PATH=some\great\module;C:\someplace\MayaStickySupraTool
 
 ### Select
 * Select tool
+
+---
+
+## License
+
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
