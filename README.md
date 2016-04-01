@@ -53,6 +53,8 @@ MAYA_MODULE_PATH=some\great\module;C:\someplace\MayaStickySupraTool
 
 ### Select
 * Select tool
+* Lasso Select tool
+* Paint select tool
 
 ---
 
