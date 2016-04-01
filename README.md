@@ -19,7 +19,7 @@ This may cause maya into very unstable, thus using this with tough heart that is
 
 ### before maya launch
 
-* [Download ZIP](https://github.com/yamahigashi/MayaStickySupraTool/archive/master.zip) this repository and extract .zip to (e.g. C:\someplace\MayaStickySupraTool)
+* [Download ZIP](https://github.com/yamahigashi/MayaStickySupraTool/releases/) this repository and extract .zip to (e.g. C:\someplace\MayaStickySupraTool)
 * Edit maya.env and append to MAYA_MODULE_PATH this module like below
 
 ```bat
