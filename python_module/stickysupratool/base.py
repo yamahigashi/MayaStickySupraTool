@@ -98,31 +98,49 @@ class StickyTool(object):
         return ks
 
     @classmethod
-    def _get_keys_pressed(cls):
+    def _get_keys_pressed(cls, exclude_mouse=True):
         ks = cls._get_keystates()
         res = []
         for i, x in enumerate(ks):
             if bool(x):
                 res.append(i)
 
-        return cls._filter_ignore_keys(res)
+        return cls._filter_ignore_keys(res, exclude_mouse)
 
     @classmethod
-    def _filter_ignore_keys(cls, keycodes):
+    def _filter_ignore_keys(cls, keycodes, exclude_mouse=True):
         ''' https://msdn.microsoft.com/ja-jp/library/windows/desktop/dd375731(v=vs.85).aspx
 
             使わないけど何故かフラグ立ってるようなキーコード除外する '''
 
-        filtered_codes = filter(lambda n: not (n < 8), keycodes)
-        filtered_codes = filter(lambda n: not (0x0E <= n and n <= 0x0F), keycodes)
-        filtered_codes = filter(lambda n: not (0x13 <= n and n <= 0x1A), keycodes)
-        filtered_codes = filter(lambda n: not (0x3A <= n and n <= 0x40), keycodes)
-        filtered_codes = filter(lambda n: not (0x88 <= n and n <= 0x8F), keycodes)
-        filtered_codes = filter(lambda n: not (0x90 == n), keycodes)
-        filtered_codes = filter(lambda n: not (0x91 == n), keycodes)
-        filtered_codes = filter(lambda n: not (0x92 <= n and n <= 0x9F), keycodes)
-        filtered_codes = filter(lambda n: not (0xA6 <= n), keycodes)
+        def _check(n, exclude_mouse):
 
+            if exclude_mouse:
+                if (0x00 <= n and n <= 0x06):
+                    return False
+
+            if (0x07 <= n and n <= 0x08):
+                return False
+            if (0x0E <= n and n <= 0x0F):
+                return False
+            if (0x13 <= n and n <= 0x1A):
+                return False
+            if (0x3A <= n and n <= 0x40):
+                return False
+            if (0x88 <= n and n <= 0x8F):
+                return False
+            if (0x90 == n):
+                return False
+            if (0x91 == n):
+                return False
+            if (0x92 <= n and n <= 0x9F):
+                return False
+            if (0xA6 <= n):
+                return False
+
+            return True
+
+        filtered_codes = filter(lambda n: _check(n, exclude_mouse), keycodes)
         return filtered_codes
 
     ###########################################################################
@@ -139,8 +157,14 @@ class StickyTool(object):
         '''
 
         global LOCK
+        start_time = time.time()
+        elapsed_time = time.time() - start_time
+        delayed = kwargs.get('delayed', False)
 
         def check_press_continued(pressed_keys):
+
+            if not pressed_keys:
+                return False
 
             for k in pressed_keys:
                 if cls._get_key_released(k):
@@ -148,9 +172,12 @@ class StickyTool(object):
             else:
                 return True
 
-        start_time = time.time()
-        elapsed_time = time.time() - start_time
-        delayed = kwargs.get('delayed', False)
+        def wait_release(keys):
+            while check_press_continued(keys):
+                time.sleep(cls.polling)
+                elapsed_time = time.time() - start_time
+                if elapsed_time > cls.threshold:
+                    cls.while_key_pressed()
 
         with LOCK:
             try:
@@ -159,11 +186,12 @@ class StickyTool(object):
                     time.sleep(cls.polling)
 
                 cls.on_key_pressed_begin()
-                while check_press_continued(pressed_keys):
-                    time.sleep(cls.polling)
-                    elapsed_time = time.time() - start_time
-                    if elapsed_time > cls.threshold:
-                        cls.while_key_pressed()
+                wait_release(pressed_keys)
+
+                # if mouse button continued down althogh keyshortcuts released,
+                # the comman still continue.
+                mouse_down = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed, exclude_mouse=False)
+                wait_release(mouse_down)
 
             except Exception as e:
                 print e
@@ -224,7 +252,7 @@ class ToolBase(StickyTool):
     @classmethod
     @execute_in_main_thread
     def while_key_pressed(cls):
-        ''' おしてる間中一定間隔で実行される 未実装'''
+        ''' おしてる間中一定間隔で実行される '''
         pass
 
     @classmethod
