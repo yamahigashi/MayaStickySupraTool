@@ -86,7 +86,7 @@ def register_runtime_commands():
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.LassoSelectTool.execute() "''',
-        'cmd_name':        'gml_si_lassoselect_tool'
+        'cmd_name':        'gml_si_lasso_select_tool'
     })
 
     opts.append({
@@ -94,7 +94,7 @@ def register_runtime_commands():
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PaintSelectTool.execute() "''',
-        'cmd_name':        'gml_si_paintselect_tool'
+        'cmd_name':        'gml_si_paint_select_tool'
     })
 
     ##########################################################################
@@ -104,7 +104,7 @@ def register_runtime_commands():
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.NextFrame.execute() "''',
-        'cmd_name':        'gml_si_nextframe_tool'
+        'cmd_name':        'gml_si_next_frame_tool'
     })
 
     opts.append({
@@ -112,7 +112,9 @@ def register_runtime_commands():
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PrevFrame.execute() "''',
-        'cmd_name':        'gml_si_prevframe_tool'
+        'cmd_name':        'gml_si_prev_frame_tool'
+    })
+
     })
 
     ##########################################################################
