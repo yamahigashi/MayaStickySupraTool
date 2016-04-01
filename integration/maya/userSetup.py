@@ -81,6 +81,22 @@ def register_runtime_commands():
         'cmd_name':        'gml_si_select_tool'
     })
 
+    opts.append({
+        'annotation':      "",
+        'category':        "SI style tool",
+        'commandLanguage': "python",
+        'command':         r'''"import stickysupratool\r\nstickysupratool.LassoSelectTool.execute() "''',
+        'cmd_name':        'gml_si_lassoselect_tool'
+    })
+
+    opts.append({
+        'annotation':      "",
+        'category':        "SI style tool",
+        'commandLanguage': "python",
+        'command':         r'''"import stickysupratool\r\nstickysupratool.PaintSelectTool.execute() "''',
+        'cmd_name':        'gml_si_paintselect_tool'
+    })
+
     ##########################################################################
     # playback
     opts.append({
