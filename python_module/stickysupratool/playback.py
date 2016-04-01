@@ -11,7 +11,7 @@ from stickysupratool import StickyTool, execute_in_main_thread
 class PlaybackTool(StickyTool):
 
     polling = 0.0083  # in seconds, 120fps
-    threshold = 0.2
+    threshold = 0.15
 
     @classmethod
     def _next_frame(cls):
@@ -62,3 +62,41 @@ class PrevFrame(PlaybackTool):
     def while_key_pressed(cls):
         ''' おしてる間中一定間隔で実行される '''
         cls._prev_frame()
+
+
+class NextKey(PlaybackTool):
+
+    threshold = 0.15
+
+    @classmethod
+    @execute_in_main_thread
+    def on_key_pressed_begin(cls):
+        ''' キー押し始めた時に実行する '''
+
+        mel.eval('currentTime -edit `findKeyframe -timeSlider -which next`;')
+
+    @classmethod
+    @execute_in_main_thread
+    def while_key_pressed(cls):
+        ''' おしてる間中一定間隔で実行される '''
+
+        mel.eval('currentTime -edit `findKeyframe -timeSlider -which next`;')
+
+
+class PrevKey(PlaybackTool):
+
+    threshold = 0.15
+
+    @classmethod
+    @execute_in_main_thread
+    def on_key_pressed_begin(cls):
+        ''' キー押し始めた時に実行する '''
+
+        mel.eval('currentTime -edit `findKeyframe -timeSlider -which previous`;')
+
+    @classmethod
+    @execute_in_main_thread
+    def while_key_pressed(cls):
+        ''' おしてる間中一定間隔で実行される '''
+
+        mel.eval('currentTime -edit `findKeyframe -timeSlider -which previous`;')

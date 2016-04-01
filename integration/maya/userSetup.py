@@ -115,6 +115,20 @@ def register_runtime_commands():
         'cmd_name':        'gml_si_prev_frame_tool'
     })
 
+    opts.append({
+        'annotation':      "",
+        'category':        "SI style tool",
+        'commandLanguage': "python",
+        'command':         r'''"import stickysupratool\r\nstickysupratool.NextKey.execute() "''',
+        'cmd_name':        'gml_si_next_key_tool'
+    })
+
+    opts.append({
+        'annotation':      "",
+        'category':        "SI style tool",
+        'commandLanguage': "python",
+        'command':         r'''"import stickysupratool\r\nstickysupratool.PrevKey.execute() "''',
+        'cmd_name':        'gml_si_prev_key_tool'
     })
 
     ##########################################################################
