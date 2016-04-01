@@ -217,9 +217,9 @@ class ToolBase(StickyTool):
         # キー離した時のために始動時の状態を保存する
         cls.initial_context = mel.eval("currentCtx;")
         cls.initial_context_class = mel.eval(
-            'contextInfo -c "{}";'.format(cls.initial_context))
+            'contextInfo -c "{0}";'.format(cls.initial_context))
 
-        mel.eval('setToolTo {};'.format(cls.tool_context))
+        mel.eval('setToolTo {0};'.format(cls.tool_context))
 
     @classmethod
     @execute_in_main_thread
@@ -241,6 +241,6 @@ class ToolBase(StickyTool):
         ''' 離した時に実行 押している時間が threshold 以上の場合（長押し） '''
 
         if (cls.initial_context != cls.tool_context):
-            mel.eval('setToolTo {}'.format(cls.initial_context))
+            mel.eval('setToolTo {0}'.format(cls.initial_context))
         else:
             mel.eval('setToolTo selectSuperContext')

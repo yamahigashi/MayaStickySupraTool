@@ -24,7 +24,7 @@ class OrbitTool(ToolBase):
         ''' 離した時に実行 押している時間が threshold 以下の場合（ちょい押し） '''
 
         if (cls.initial_context != cls.tool_context):
-            mel.eval('setToolTo {}'.format(cls.initial_context))
+            mel.eval('setToolTo {0}'.format(cls.initial_context))
 
 
 class PanTool(ToolBase):
@@ -43,7 +43,7 @@ class PanTool(ToolBase):
         ''' 離した時に実行 押している時間が threshold 以下の場合（ちょい押し） '''
 
         if (cls.initial_context != cls.tool_context):
-            mel.eval('setToolTo {}'.format(cls.initial_context))
+            mel.eval('setToolTo {0}'.format(cls.initial_context))
 
 
 class DollyTool(ToolBase):
@@ -62,4 +62,4 @@ class DollyTool(ToolBase):
         ''' 離した時に実行 押している時間が threshold 以下の場合（ちょい押し） '''
 
         if (cls.initial_context != cls.tool_context):
-            mel.eval('setToolTo {}'.format(cls.initial_context))
+            mel.eval('setToolTo {0}'.format(cls.initial_context))
