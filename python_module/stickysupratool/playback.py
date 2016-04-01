@@ -43,7 +43,7 @@ class NextFrame(PlaybackTool):
     @classmethod
     @execute_in_main_thread
     def while_key_pressed(cls):
-        ''' おしてる間中一定間隔で実行される 未実装'''
+        ''' おしてる間中一定間隔で実行される '''
         cls._next_frame()
 
 
@@ -60,5 +60,5 @@ class PrevFrame(PlaybackTool):
     @classmethod
     @execute_in_main_thread
     def while_key_pressed(cls):
-        ''' おしてる間中一定間隔で実行される 未実装'''
+        ''' おしてる間中一定間隔で実行される '''
         cls._prev_frame()
