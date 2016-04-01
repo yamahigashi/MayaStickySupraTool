@@ -50,7 +50,7 @@ class StickyTool(object):
     polling = POLLING
     threshold = THRESHOLD
     enable_delayed_execute = False
-    force_break_time = 10.0  # in second
+    # force_break_time = 10.0  # in second
 
     ###########################################################################
     @classmethod
@@ -98,24 +98,29 @@ class StickyTool(object):
         return ks
 
     @classmethod
-    def _get_keys_pressed(cls, exclude_mouse=True):
+    def _get_keys_pressed(cls, **kwargs):
         ks = cls._get_keystates()
         res = []
         for i, x in enumerate(ks):
             if bool(x):
                 res.append(i)
 
-        return cls._filter_ignore_keys(res, exclude_mouse)
+        return cls._filter_ignore_keys(res, **kwargs)
 
     @classmethod
-    def _filter_ignore_keys(cls, keycodes, exclude_mouse=True):
+    def _filter_ignore_keys(cls, keycodes, **kwargs):
         ''' https://msdn.microsoft.com/ja-jp/library/windows/desktop/dd375731(v=vs.85).aspx
 
             使わないけど何故かフラグ立ってるようなキーコード除外する '''
 
-        def _check(n, exclude_mouse):
+        def _check(n, mouse_only=False, exclude_mouse=True):
 
-            if exclude_mouse:
+            if mouse_only:
+                if (0x00 <= n and n <= 0x06):
+                    return True
+                else:
+                    return False
+            elif exclude_mouse:
                 if (0x00 <= n and n <= 0x06):
                     return False
 
@@ -140,7 +145,7 @@ class StickyTool(object):
 
             return True
 
-        filtered_codes = filter(lambda n: _check(n, exclude_mouse), keycodes)
+        filtered_codes = filter(lambda n: _check(n, **kwargs), keycodes)
         return filtered_codes
 
     ###########################################################################
@@ -190,13 +195,14 @@ class StickyTool(object):
 
                 # if mouse button continued down althogh keyshortcuts released,
                 # the comman still continue.
-                mouse_down = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed, exclude_mouse=False)
+                mouse_down = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed, mouse_only=True)
                 wait_release(mouse_down)
 
             except Exception as e:
                 print e
 
             finally:
+                elapsed_time = time.time() - start_time
                 if elapsed_time < cls.threshold:
                     cls.on_key_released_short()
 
