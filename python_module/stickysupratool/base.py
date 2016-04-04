@@ -113,40 +113,48 @@ class StickySupraTool(object):
 
             使わないけど何故かフラグ立ってるようなキーコード除外する '''
 
-        def _check(n, mouse_only=False, exclude_mouse=True):
+        def necessary(n, mouse_only=False, exclude_mouse=True):
 
             if mouse_only:
-                if (0x00 <= n and n <= 0x06):
+                if (0x00 <= n <= 0x06):
                     return True
                 else:
                     return False
             elif exclude_mouse:
-                if (0x00 <= n and n <= 0x06):
+                if (0x00 <= n <= 0x06):
                     return False
 
-            if (0x07 <= n and n <= 0x08):
-                return False
-            if (0x0E <= n and n <= 0x0F):
-                return False
-            if (0x13 <= n and n <= 0x1A):
-                return False
-            if (0x3A <= n and n <= 0x40):
-                return False
-            if (0x88 <= n and n <= 0x8F):
-                return False
-            if (0x90 == n):
-                return False
-            if (0x91 == n):
-                return False
-            if (0x92 <= n and n <= 0x9F):
-                return False
-            if (0xA6 <= n):
+            if (
+                not (0x07 <= n <= 0x08) and
+                not (0x0E <= n <= 0x0F) and
+                not (0x13 <= n <= 0x1A) and
+                not (0x3A <= n <= 0x40) and
+                not (0x88 <= n <= 0x8F) and
+                not (0x90 == n) and
+                not (0x91 == n) and
+                not (0x92 <= n <= 0x9F) and
+                not (0xA6 <= n)
+            ):
+                return True
+
+            else:
                 return False
 
-            return True
-
-        filtered_codes = filter(lambda n: _check(n, **kwargs), keycodes)
+        filtered_codes = filter(lambda n: necessary(n, **kwargs), keycodes)
         return filtered_codes
+
+    @classmethod
+    def _check_any_keys_released(cls, pressed_keys):
+        ''' return True if a any key released for given keys '''
+
+        if not pressed_keys:
+            return False
+
+        for k in pressed_keys:
+            if cls._get_key_released(k):
+                return False
+        else:
+            return True
 
     ###########################################################################
     @classmethod
@@ -166,19 +174,8 @@ class StickySupraTool(object):
         elapsed_time = time.time() - start_time
         delayed = kwargs.get('delayed', False)
 
-        def check_press_continued(pressed_keys):
-
-            if not pressed_keys:
-                return False
-
-            for k in pressed_keys:
-                if cls._get_key_released(k):
-                    return False
-            else:
-                return True
-
         def wait_release(keys):
-            while check_press_continued(keys):
+            while cls._check_any_keys_released(keys):
                 time.sleep(cls.polling)
                 elapsed_time = time.time() - start_time
                 if elapsed_time > cls.threshold:
@@ -186,15 +183,18 @@ class StickySupraTool(object):
 
         with LOCK:
             try:
+                # if delayed execute enable, key must be took again when the delayed began
                 if delayed:
                     pressed_keys = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed)
-                    time.sleep(cls.polling)
+                    # time.sleep(cls.polling)
 
+                # execute begin event and execute while event at invertervaly
+                # and then wait for key release
                 cls.on_key_pressed_begin()
                 wait_release(pressed_keys)
 
                 # if mouse button continued down althogh keyshortcuts released,
-                # the comman still continue.
+                # the command still continue.
                 mouse_down = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed, mouse_only=True)
                 wait_release(mouse_down)
 
@@ -215,7 +215,7 @@ class StickySupraTool(object):
 
         global LOCK
         if LOCK.locked():
-            # return already locked
+            # return already locked AND delayed excute is disabled
             if not cls.enable_delayed_execute:
                 return
             else:
