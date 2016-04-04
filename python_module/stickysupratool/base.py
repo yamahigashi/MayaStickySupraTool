@@ -18,8 +18,10 @@
 #　『移動モード中の選択ロックを解除』し、キーを離せば 『選択ロックを施錠』する
 '''
 
-import ctypes
+import os
+import re
 import time
+import ctypes
 import threading
 
 import maya.utils
@@ -27,8 +29,8 @@ import maya.mel as mel
 ###############################################################################
 
 LOCK = threading.Lock()
-POLLING = 0.0033
-THRESHOLD = 0.2
+DEFAULT_POLLING = 0.0033  # may be overrided by envvar
+DEFAULT_THRESHOLD = 0.2   # may be overrided by envvar
 
 ###############################################################################
 
@@ -40,26 +42,57 @@ def execute_in_main_thread(func):
     return _inner
 
 
+class classproperty(object):
+
+    def __init__(self, f):
+        self.f = f
+
+    def __get__(self, obj, owner):
+        return self.f(owner)
+
+
 class StickySupraTool(object):
 
     ''' base class for sticky tools '''
 
-    global POLLING
-    global THRESHOLD
+    global DEFAULT_POLLING
+    global DEFAULT_THRESHOLD
 
-    polling = POLLING
-    threshold = THRESHOLD
+    DEFAULT_POLLING = os.environ.get('STICKY_SUPRA_DEFAULT_POLLING', DEFAULT_POLLING)
+    DEFAULT_THRESHOLD = os.environ.get('STICKY_SUPRA_DEFAULT_THRESHOLD', DEFAULT_THRESHOLD)
+
     enable_delayed_execute = False
-    # force_break_time = 10.0  # in second
 
     ###########################################################################
+    _polling = None
+    _threshold = None
+
+    @classproperty
+    def polling(cls):
+
+        if not cls._polling:
+            cls._polling = float(
+                cls.get_var_from_envvar('polling', DEFAULT_POLLING))
+
+        return cls._polling
+
+    @classproperty
+    def threshold(cls):
+        if not cls._threshold:
+            cls._threshold = float(
+                cls.get_var_from_envvar('threshold', DEFAULT_THRESHOLD))
+
+        return cls._threshold
+
+    ###########################################################################
+    # must be implemented in each derived tool classes
     @classmethod
     def on_key_pressed_begin(cls):
         pass
 
     @classmethod
     def while_key_pressed(cls):
-        ''' おしてる間中一定間隔で実行される 未実装'''
+        ''' おしてる間中一定間隔で実行される '''
         pass
 
     @classmethod
@@ -71,6 +104,48 @@ class StickySupraTool(object):
     def on_key_released_long(cls):
         ''' 離した時に実行 押している時間が threshold 以上の場合（長押し） '''
         pass
+
+    ###########################################################################
+    # functions for commands setup in maya userSetup.py
+    @classmethod
+    def get_runtime_command_name(cls):
+        ''' return tokenized classname for register_runtime_command.
+
+        example:
+            CapitalClassNameTool into gml_si_capital_class_name_tool
+            PaintSelectTool into gml_si_paint_select_tool
+
+        the postfix "Tool" may ommitted, lower case and underscore '''
+
+        splat = re.findall('[A-Z][^A-Z]*', cls.__name__)
+        if splat[-1] is 'Tool':
+            splat = splat[:-2]
+
+        return "gml_{0}_tool".format("_".join(splat))
+
+    @classmethod
+    def get_runtime_command_options(cls):
+
+        return {
+            'annotation':      "",
+            'category':        "SI style tool",
+            'commandLanguage': "python",
+            'command':         r'''"import stickysupratool\r\nstickysupratool.{0}.execute() "'''.format(cls.__name__),
+            'cmd_name':        cls.get_runtime_command_name()
+        }
+
+    @classmethod
+    def get_var_from_envvar(cls, about, default):
+
+        splat = re.findall('[A-Z][^A-Z]*', cls.__name__)
+        if splat[-1] is 'Tool':
+            splat = splat[:-2]
+        splat = "_".join(splat)
+
+        print '{0}_{1}'.format(splat.upper(), about.upper())
+
+        return os.environ.get(
+            '{0}_{1}'.format(splat.upper(), about.upper()), default)
 
     ###########################################################################
     @classmethod
