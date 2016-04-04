@@ -1,4 +1,4 @@
-+ StickySupraTool 0.0.3 .
++ StickySupraTool 0.1 .
 PYTHONPATH +:= ./python_module
 PYTHONPATH +:= ./integration/maya
 STICKY_SUPRA_DEFAULT_POLLING=0.066

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __all__ = ['base', 'SRT', 'playback', 'select', 'camera']
-VERSION = "0.0.3"
+VERSION = "0.1"
 
 from base import *
 from SRT import *
