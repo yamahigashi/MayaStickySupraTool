@@ -142,8 +142,6 @@ class StickySupraTool(object):
             splat = splat[:-2]
         splat = "_".join(splat)
 
-        print '{0}_{1}'.format(splat.upper(), about.upper())
-
         return os.environ.get(
             '{0}_{1}'.format(splat.upper(), about.upper()), default)
 
@@ -260,8 +258,8 @@ class StickySupraTool(object):
             try:
                 # if delayed execute enable, key must be took again when the delayed began
                 if delayed:
+                    time.sleep(cls.polling)
                     pressed_keys = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed)
-                    # time.sleep(cls.polling)
 
                 # execute begin event and execute while event at invertervaly
                 # and then wait for key release
