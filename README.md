@@ -10,13 +10,14 @@ more info please see Softimage docs [Using Shortcut Keys to Activate Tools](http
 section.
 
 ### Limitation
+
 supports maya2013 (or higher) Windows only
 
 ## Install
 
 ### before maya launch
 
-* [Download ZIP](https://github.com/yamahigashi/MayaStickySupraTool/releases/) this repository and extract .zip to (e.g. C:\someplace\MayaStickySupraTool)
+* [Download Source code (zip)](https://github.com/yamahigashi/MayaStickySupraTool/releases/latest) this repository and extract .zip to (e.g. C:\someplace\MayaStickySupraTool)
 * Edit maya.env and append to MAYA_MODULE_PATH this module like below
 
 ```file:bat
@@ -75,7 +76,10 @@ NEXT_FRAME_POLLING=0.0083
 NEXT_FRAME_THRESHOLD=0.15
 ```
 
-```TOOL_NAME_[POLLING|THRESHOLD]```
+```ini
+TOOL_NAME_[POLLING|THRESHOLD]
+```
+
 
 <dl>
   <dt>TOOL_NAME</dt>
