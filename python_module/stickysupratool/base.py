@@ -27,7 +27,7 @@ import maya.mel as mel
 ###############################################################################
 
 LOCK = threading.Lock()
-POLLING = 0.033
+POLLING = 0.0033
 THRESHOLD = 0.2
 
 ###############################################################################
@@ -40,7 +40,7 @@ def execute_in_main_thread(func):
     return _inner
 
 
-class StickyTool(object):
+class StickySupraTool(object):
 
     ''' base class for sticky tools '''
 
@@ -230,7 +230,7 @@ class StickyTool(object):
         t.start()
 
 
-class ToolBase(StickyTool):
+class ToolBase(StickySupraTool):
 
     # default settings override
     # polling = 0.066  # in seconds

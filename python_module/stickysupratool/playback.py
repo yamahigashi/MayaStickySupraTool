@@ -4,11 +4,11 @@
 
 import maya.mel as mel
 
-from stickysupratool import StickyTool, execute_in_main_thread
+from stickysupratool import StickySupraTool, execute_in_main_thread
 ###############################################################################
 
 
-class PlaybackTool(StickyTool):
+class PlaybackTool(StickySupraTool):
 
     polling = 0.0083  # in seconds, 120fps
     threshold = 0.15
