@@ -10,9 +10,6 @@ from stickysupratool import StickySupraTool, execute_in_main_thread
 
 class PlaybackTool(StickySupraTool):
 
-    polling = 0.0083  # in seconds, 120fps
-    threshold = 0.15
-
     @classmethod
     def _next_frame(cls):
         if (mel.eval('currentTime -q;') < mel.eval('playbackOptions -q -max;')):
@@ -66,8 +63,6 @@ class PrevFrame(PlaybackTool):
 
 class NextKey(PlaybackTool):
 
-    threshold = 0.15
-
     @classmethod
     @execute_in_main_thread
     def on_key_pressed_begin(cls):
@@ -84,8 +79,6 @@ class NextKey(PlaybackTool):
 
 
 class PrevKey(PlaybackTool):
-
-    threshold = 0.15
 
     @classmethod
     @execute_in_main_thread
