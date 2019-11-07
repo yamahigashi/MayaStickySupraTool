@@ -50,7 +50,7 @@ MAYA_MODULE_PATH=some\great\module;C:\someplace\MayaStickySupraTool
 * Dolly tool
 
 ### Select
-* Select tool
+* Select tool ( I recommend use this with [lock selection button](http://help.autodesk.com/view/MAYAUL/2019/ENU/?guid=GUID-08544BA4-AF96-40C0-885C-0FEF1E02B90F).)
 * Lasso Select tool
 * Paint select tool
 
