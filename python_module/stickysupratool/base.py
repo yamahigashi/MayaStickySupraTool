@@ -271,8 +271,10 @@ class StickySupraTool(object):
                 mouse_down = maya.utils.executeInMainThreadWithResult(cls._get_keys_pressed, mouse_only=True)
                 wait_release(mouse_down)
 
-            except Exception as e:
-                print e
+            except Exception:
+                import traceback
+                traceback.print_exc()
+                traceback.print_stack()
 
             finally:
                 elapsed_time = time.time() - start_time
