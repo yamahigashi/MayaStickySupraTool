@@ -35,10 +35,13 @@ def register_runtime_command(opt):
         mel.eval(runtime_cmd.format(**opt))
         mel.eval(name_cmd.format(**opt))
 
-    except Exception as e:
-        print opt['cmd_name']
-        print opt['command']
-        raise e
+    except Exception:
+        import traceback
+        traceback.print_exc()
+        traceback.print_stack()
+        print(opt['cmd_name'])
+        print(opt['command'])
+        raise
 
 
 def register_runtime_commands():
@@ -168,9 +171,9 @@ if __name__ == '__main__':
         print("load stickysupratool: version {0}".format(stickysupratool.VERSION))
         register_runtime_commands()
 
-    except Exception as e:
+    except Exception:
         # avoidng the invoking userSetup.py chain accidentally stop,
         # all exception must collapse
-        print e
         import traceback
         traceback.print_exc()
+        traceback.print_stack()

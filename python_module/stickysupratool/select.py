@@ -15,7 +15,7 @@ class SelectBase(ToolBase):
     def on_key_released_short(cls):
 
         if (cls.initial_context != cls.tool_context):
-            mel.eval('setToolTo {}'.format(cls.initial_context))
+            mel.eval('setToolTo {}'.format(cls.tool_context))
 
 
 class SelectTool(SelectBase):
