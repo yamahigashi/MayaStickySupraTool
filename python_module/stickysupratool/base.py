@@ -189,12 +189,12 @@ class StickySupraTool(object):
         def necessary(n, mouse_only=False, exclude_mouse=True):
 
             if mouse_only:
-                if (0x00 <= n <= 0x06):
+                if (0x01 <= n <= 0x06):
                     return True
                 else:
                     return False
             elif exclude_mouse:
-                if (0x00 <= n <= 0x06):
+                if (0x01 <= n <= 0x06):
                     return False
 
             if (
