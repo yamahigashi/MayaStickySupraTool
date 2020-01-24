@@ -206,7 +206,8 @@ class StickySupraTool(object):
                 not (0x90 == n) and
                 not (0x91 == n) and
                 not (0x92 <= n <= 0x9F) and
-                not (0xA6 <= n)
+                # not (0xA6 <= n)
+                not (0xFF <= n)
             ):
                 return True
 
