@@ -51,7 +51,7 @@ def register_runtime_commands():
     ##########################################################################
     # SRT
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.ScaleTool.execute() "''',
@@ -59,7 +59,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.RotateTool.execute() "''',
@@ -67,7 +67,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.MoveTool.execute() "''',
@@ -77,7 +77,7 @@ def register_runtime_commands():
     ##########################################################################
     # select
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.SelectTool.execute() "''',
@@ -85,7 +85,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.LassoSelectTool.execute() "''',
@@ -93,7 +93,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PaintSelectTool.execute() "''',
@@ -103,7 +103,7 @@ def register_runtime_commands():
     ##########################################################################
     # playback
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.NextFrame.execute() "''',
@@ -111,7 +111,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PrevFrame.execute() "''',
@@ -119,7 +119,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.NextKey.execute() "''',
@@ -127,7 +127,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PrevKey.execute() "''',
@@ -137,7 +137,7 @@ def register_runtime_commands():
     ##########################################################################
     # camera
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.PanTool.execute() "''',
@@ -145,7 +145,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.OrbitTool.execute() "''',
@@ -153,7 +153,7 @@ def register_runtime_commands():
     })
 
     opts.append({
-        'annotation':      "",
+        'annotation':      "si style tool",
         'category':        "SI style tool",
         'commandLanguage': "python",
         'command':         r'''"import stickysupratool\r\nstickysupratool.DollyTool.execute() "''',
