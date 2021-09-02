@@ -3,7 +3,10 @@
 '''
 
 
-from stickysupratool import ToolBase, execute_in_main_thread
+from .base import (
+    ToolBase,
+    # execute_in_main_thread
+)
 ###############################################################################
 
 

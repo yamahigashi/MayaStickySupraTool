@@ -247,6 +247,7 @@ class StickySupraTool(object):
         start_time = time.time()
         elapsed_time = time.time() - start_time
         delayed = kwargs.get('delayed', False)
+        print(elapsed_time)
 
         def wait_release(keys):
             while cls._check_any_keys_released(keys):

@@ -4,7 +4,10 @@
 
 import maya.mel as mel
 
-from stickysupratool import execute_in_main_thread, ToolBase
+from .base import (
+    ToolBase,
+    execute_in_main_thread
+)
 ###############################################################################
 
 
