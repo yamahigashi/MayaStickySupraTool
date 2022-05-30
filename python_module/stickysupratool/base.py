@@ -214,7 +214,7 @@ class StickySupraTool(object):
             else:
                 return False
 
-        filtered_codes = filter(lambda n: necessary(n, **kwargs), keycodes)
+        filtered_codes = list(filter(lambda n: necessary(n, **kwargs), keycodes))
         return filtered_codes
 
     @classmethod
@@ -247,7 +247,6 @@ class StickySupraTool(object):
         start_time = time.time()
         elapsed_time = time.time() - start_time
         delayed = kwargs.get('delayed', False)
-        print(elapsed_time)
 
         def wait_release(keys):
             while cls._check_any_keys_released(keys):
@@ -288,15 +287,15 @@ class StickySupraTool(object):
 
     @classmethod
     def execute(cls):
-        ''' this function is invoked from maya directory from shortcut hotkey '''
+        '''this function is invoked from maya directory from shortcut hotkey'''
 
         global LOCK
         if LOCK.locked():
             # return already locked AND delayed excute is disabled
             if not cls.enable_delayed_execute:
                 return
-            else:
-                delayed = True
+
+            delayed = True
 
         else:
             delayed = False
